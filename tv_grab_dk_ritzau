@@ -207,11 +207,10 @@ sub get_ritzau_cookieid($) {
 sub get_ritzau_channel_list($)
 {
     my ( $conf ) = @_;
-    my @results = ();
 
     my $cookieid = get_ritzau_cookieid($conf);
-
     my $url = $conf->{'root-url'}->[0] . 'Main/GetChannelsListAjaxCall?Id=' . $cookieid . '&clientId=null';
+
     print STDERR "Get: $url\n" if $debug;
     my $content = getUrl($url) || return 0;
     print STDERR "Got: $content\n"  if $debug;
@@ -223,9 +222,7 @@ sub get_ritzau_channel_list($)
         warn "Failed to get channels: $_";
     };
     my $c = $channels->{'channels'};
-    push(@results, @$c);
-
-    return \@results;
+    return $c;
 }
 
 sub date_to_xmltv($) {
